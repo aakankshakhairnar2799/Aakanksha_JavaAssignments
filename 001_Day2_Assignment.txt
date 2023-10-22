@@ -1,0 +1,385 @@
+1)create a class "Shape" with 2 attributes, "width" and "height". Make sure one can not access these attributes directly.
+provide accessor methods on these attributes and allow them to call from outside of your class.
+
+
+import java.util.Scanner;
+
+class Shape
+{
+	private double width;
+	private double height;
+	Shape()
+	{
+		this.width=0;
+		this.height=0;	
+	}
+	public double getWidth() 
+	{
+		return width;
+	}
+	public void setWidth(double width) 
+	{
+		this.width = width;
+	}
+	public double getHeight() 
+	{
+		return height;
+	}
+	public void setHeight(double height)
+	{
+		this.height = height;
+	}
+
+}
+public class Day2_1
+{
+	public static void main (String args[])
+	{
+		Shape s1 = new Shape();
+		//s1.width; //private members cannot access
+		//s1.height;
+		s1.setHeight(10.5);
+		s1.setWidth(20.5);
+		System.out.println("Height is: "+s1.getHeight());
+		System.out.println("Width is: "+s1.getWidth());
+
+	}
+}
+
+
+2) Define a class "MyClass" and make sure clients can instantiate it , 
+a) without any argument
+b) with one int argument
+c) with two int arguments
+
+
+import java.util.Scanner;
+
+class Myclass
+{
+	private int num1;
+	private int num2;
+	Myclass()
+	{
+		this.num1=num1;
+		this.num2=num2;
+	}
+	Myclass(int num2)
+	{
+		this.num1=0;
+		this.num2=num2;
+	}
+	Myclass(int num1,int num2)
+	{
+		this.num1=num1;
+		this.num2=num2;
+	}
+	
+}
+public class Day2_2
+{
+	public static void main (String args[])
+	{
+		Myclass m1 = new Myclass();
+		Myclass m2 = new Myclass(10);
+		Myclass m3 = new Myclass (20,30);
+
+	}
+}
+
+
+3) Define a class "Emp" with private static member "int cnt".
+How will u make sure that outsiders can read the value of cnt ?
+
+
+import java.util.Scanner;
+
+class Emp
+{
+	static int cnt;
+
+	public static int getCnt() 
+	{
+		return cnt;
+	}
+
+	public static void setCnt(int cnt) 
+	{
+		Emp.cnt = cnt;
+	}
+	
+	
+}
+public class Day2_3
+{
+	public static void main (String args[])
+	{
+		Emp e1 =new Emp();
+		e1.setCnt(100);
+		System.out.println("Value of: "+e1.getCnt());
+
+	}
+}
+
+
+4) Define a class "DemoOb". 
+create an instance of it.
+now create a reference and assign the reference created in the above statement.
+	Discuss what happens?
+Now since u have 2 references, take one of the reference and assign a new instance of the class.
+	Discuss what happens?
+(For ur discussion, write necessary comments in the program)
+
+
+class Demoob
+{
+	private int num;
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+}
+public class pattern
+{	
+	public static void main(String[] args)
+	{
+	Demoob obj1 = new Demoob(); // creation of new object and giving reference to obj1
+	Demoob abc2; // creating a reference which is not referencing to anyone
+	abc2= obj1; // assigning obj1's object to abc's, now obj1's object have two reference
+	obj1 = new Demoob(); // creating new object and assigning to obj1 
+	
+	}
+	
+}
+
+
+
+5) Define 3 classes A , B and C
+in all these classes create static and nonstatic variables as well as methods.
+	Now Define a class "Demo" ,in which define "main" function. From this main function try to access all the members of A ,B  and C.
+
+
+import java.util.Scanner;
+
+class A
+{
+	int num;
+	static int num2;
+	public int getNum()
+	{
+		return num;
+	}
+	public void setNum(int num) 
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2)
+	{
+		A.num2 = num2;
+	}
+
+
+
+}
+class B
+{
+	int num;
+	static int num2;
+	public int getNum() 
+	{
+		return num;
+	}
+	public void setNum(int num) 
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2)
+	{
+		B.num2 = num2;
+	}
+    
+}
+class C
+{
+	int num;
+	static int num2;
+	public int getNum() 
+	{
+		return num;
+	}
+	public void setNum(int num)
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2) 
+	{
+		C.num2 = num2;
+	}
+	
+
+}
+
+public class Demo
+{
+	public static void main(String args[])
+	{
+		 A obj= new A();
+		 obj.setNum(100);
+		 A.setNum2(200);//Static member should access with Classname.setNum2()
+		 System.out.println("Num of A is: "+obj.getNum());
+		 System.out.println("Static Num of A is: "+A.getNum2());
+		 System.out.println();
+		 
+		 
+		 B obj1= new B();
+		 obj1.setNum(300);
+		 B.setNum2(400);
+		 System.out.println("Num of B is: "+obj1.getNum());
+		 System.out.println("Static Num of B is: "+B.getNum2());
+		 System.out.println();
+		 
+		 
+		 C obj2= new C();
+		 obj2.setNum(500);
+		 C.setNum2(600);
+		 System.out.println("Num of C is: "+obj2.getNum());
+		 System.out.println("Static Num of C is: "+C.getNum2());
+		 
+		
+
+	}
+}
+
+6) define static initializers in the above A,B and C classes and check the order of their execution.
+
+import java.util.Scanner;
+
+class A
+{
+	int num;
+	static int num2;
+	static
+	{
+		System.out.println("Inside A's static");
+	}
+	public int getNum()
+	{
+		return num;
+	}
+	public void setNum(int num) 
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2)
+	{
+		A.num2 = num2;
+	}
+
+
+
+}
+class B
+{
+	int num;
+	static int num2;
+	static
+	{
+		System.out.println("Inside B's static");
+	}
+	public int getNum() 
+	{
+		return num;
+	}
+	public void setNum(int num) 
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2)
+	{
+		B.num2 = num2;
+	}
+    
+}
+class C
+{
+	int num;
+	static int num2;
+	static
+	{
+		System.out.println("Inside C's static");
+	}
+	public int getNum() 
+	{
+		return num;
+	}
+	public void setNum(int num)
+	{
+		this.num = num;
+	}
+	public static int getNum2()
+	{
+		return num2;
+	}
+	public static void setNum2(int num2) 
+	{
+		C.num2 = num2;
+	}
+	
+
+}
+
+public class Demo
+{
+	public static void main(String args[])
+	{
+		 A obj= new A();
+		 obj.setNum(100);
+		 A.setNum2(200);//Static member should access with Classname.setNum2()
+		 System.out.println("Num of A is: "+obj.getNum());
+		 System.out.println("Static Num of A is: "+A.getNum2());
+		 System.out.println();
+		 
+		 
+		 B obj1= new B();
+		 obj1.setNum(300);
+		 B.setNum2(400);
+		 System.out.println("Num of B is: "+obj1.getNum());
+		 System.out.println("Static Num of B is: "+B.getNum2());
+		 System.out.println();
+		 
+		 
+		 C obj2= new C();
+		 obj2.setNum(500);
+		 C.setNum2(600);
+		 System.out.println("Num of C is: "+obj2.getNum());
+		 System.out.println("Static Num of C is: "+C.getNum2());
+		 
+		
+
+	}
+}

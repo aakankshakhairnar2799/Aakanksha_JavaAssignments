@@ -1,0 +1,115 @@
+1)
+import java.util.concurrent.*;
+
+class Myclass implements Runnable
+{
+	synchronized static void disp()
+	{
+			for(char ch='A';ch<='J';ch++)
+			{
+				System.out.print(Thread.currentThread());
+				System.out.println(ch);
+			}	
+	}
+	public void run()
+	{
+		disp();	
+	}
+}
+
+
+public class ExecutoDemo
+{
+	public static void main(String args[])
+	{
+		Myclass m1 = new Myclass();
+		ExecutorService exec = Executors.newFixedThreadPool(2);
+		exec.execute(m1);
+		exec.execute(m1);
+		exec.execute(new Myclass());
+		exec.shutdown();
+
+	}
+}
+
+
+Q2)
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
+public class MyClass2 implements Runnable{
+    static Class cs;
+    static void disp(){
+        synchronized (cs){
+            for(int i=0; i<10; i++){
+                if(i==5){
+                    try{
+                        cs.wait();
+                    }
+                    catch(InterruptedException ie){
+
+                    }
+                }
+                System.out.println(Thread.currentThread()+" "+i);
+                cs.notifyAll();
+            }
+        }
+    }
+    public void run(){
+        disp();
+    }
+    public static void main(String args[]){
+        try{
+        cs=Class.forName("MyClass2");
+        }
+        catch(ClassNotFoundException cnf){
+
+        }
+        ExecutorService exec = Executors.newFixedThreadPool(2);
+        for(int i=0; i<2; i++){
+            exec.execute(new MyClass2());
+        }
+        exec.shutdown();
+    }
+}
+
+Q3)
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MyClass4 implements Runnable {
+    ReentrantLock myLock = new ReentrantLock();
+    Condition con = myLock.newCondition();
+    public void run(){
+        myLock.lock();
+        try{
+            for(int i=0; i<10; i++){
+            if(i==5){
+                con.signalAll();
+                try{
+                    con.await();
+                }
+                catch(InterruptedException ie){
+
+                }
+            }
+            System.out.println(Thread.currentThread()+" "+i);
+        }
+        con.signalAll();
+        }
+        finally{
+            myLock.unlock();
+        }
+    }
+    public static void main(String args[]){
+        ExecutorService exec = Executors.newFixedThreadPool(2);
+        MyClass4 m = new MyClass4();
+        exec.execute(m);
+        exec.execute(m);
+        exec.shutdown();
+    }
+}
+
